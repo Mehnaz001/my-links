@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Links</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d0d14;
+    --bg-glow: #16162a;
+    --card: #16161f;
+    --card-border: #26263a;
+    --text: #f4f4f8;
+    --muted: #9393a8;
+
+    --insta-1: #f58529;
+    --insta-2: #dd2a7b;
+    --insta-3: #8134af;
+    --insta-4: #515bd4;
+    --youtube: #ff0033;
+    --linkedin: #0a66c2;
+    --github: #d7d7de;
+    --whatsapp: #25d366;
+    --x: #ffffff;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    min-height: 100vh;
+    background:
+      radial-gradient(600px circle at 50% -10%, var(--bg-glow), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 64px 20px 100px;
+  }
+
+  .wrap{
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatar{
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--insta-1), var(--insta-2), var(--insta-3), var(--insta-4));
+    padding: 3px;
+    margin-bottom: 20px;
+    animation: floatIn 0.7s ease both;
+  }
+  .avatar-inner{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    overflow: hidden;
+  }
+  /* Replace initials with <img src="your-photo.jpg"> inside .avatar-inner if you want a real photo */
+
+  h1{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    animation: floatIn 0.7s ease both 0.05s;
+  }
+
+  .handle{
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
+    animation: floatIn 0.7s ease both 0.1s;
+  }
+
+  .bio{
+    text-align: center;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin: 16px 0 36px;
+    max-width: 340px;
+    animation: floatIn 0.7s ease both 0.15s;
+  }
+  /* Edit the text above to your own bio */
+
+  .links{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .link-card{
+    --accent: var(--muted);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 18px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .link-card.in-view{
+    animation: revealUp 0.6s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+
+  .link-card::before{
+    content:"";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .link-card:hover{
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,0.6);
+  }
+  .link-card:hover::before{ opacity: 0.1; }
+
+  .icon-badge{
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-badge svg{ width: 22px; height: 22px; }
+
+  .link-text{
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .link-title{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+  }
+  .link-sub{
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .arrow{
+    position: relative;
+    z-index: 1;
+    color: var(--muted);
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+  .link-card:hover .arrow{
+    transform: translateX(4px);
+    color: var(--text);
+  }
+
+  /* Platform accents */
+  .instagram{ --accent: linear-gradient(135deg, var(--insta-1), var(--insta-2), var(--insta-3)); }
+  .instagram .icon-badge{ background: linear-gradient(135deg, var(--insta-1), var(--insta-2), var(--insta-3), var(--insta-4)); }
+
+  .youtube{ --accent: var(--youtube); }
+  .youtube .icon-badge{ background: rgba(255,0,51,0.14); }
+
+  .linkedin{ --accent: var(--linkedin); }
+  .linkedin .icon-badge{ background: rgba(10,102,194,0.16); }
+
+  .github{ --accent: var(--github); }
+  .github .icon-badge{ background: rgba(215,215,222,0.12); }
+
+  .whatsapp{ --accent: var(--whatsapp); }
+  .whatsapp .icon-badge{ background: rgba(37,211,102,0.14); }
+
+  .x{ --accent: var(--x); }
+  .x .icon-badge{ background: rgba(255,255,255,0.1); }
+
+  footer{
+    margin-top: 48px;
+    color: var(--muted);
+    font-size: 12px;
+    opacity: 0;
+    animation: floatIn 0.7s ease both 0.3s;
+  }
+
+  @keyframes floatIn{
+    from{ opacity: 0; transform: translateY(-10px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes revealUp{
+    from{ opacity: 0; transform: translateY(28px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .link-card, .avatar, h1, .handle, .bio, footer{
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="avatar">
+    <div class="avatar-inner">MS</div>
+  </div>
+
+  <h1>Mehnaz Sheikh</h1>
+  <div class="handle">@mehnazcodes</div>
+  <p class="bio">Full Stack Developer & Content Creator — building products and sharing the journey along the way.</p>
+
+  <div class="links">
+
+    <a href="https://www.instagram.com/mehnaz.codes/" class="link-card instagram" target="_blank" rel="noopener">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4.2" stroke="white" stroke-width="1.8"/>
+          <circle cx="17.4" cy="6.6" r="1.2" fill="white"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">Instagram</div>
+        <div class="link-sub">Tech Content</div>
+      </div>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a href="#" class="link-card youtube" target="_blank" rel="noopener">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21.6 7.2s-.2-1.5-.8-2.1c-.8-.8-1.7-.8-2.1-.9C15.9 4 12 4 12 4s-3.9 0-6.7.2c-.4 0-1.3.1-2.1.9-.6.6-.8 2.1-.8 2.1S2.2 9 2.2 10.8v1.4C2.2 14 2.4 15.8 2.4 15.8s.2 1.5.8 2.1c.8.8 1.8.8 2.3.9 1.7.2 7.1.2 7.1.2s3.9 0 6.7-.3c.4 0 1.3-.1 2.1-.9.6-.6.8-2.1.8-2.1s.2-1.8.2-3.6v-1.4c0-1.8-.2-3.6-.2-3.6z" fill="#ff0033"/>
+          <path d="M10 15.2V8.8l5.5 3.2-5.5 3.2z" fill="white"/>
+        </svg>
+      </div>
+      <div class="www.youtube.com/@MehnazCodes">
+        <div class="link-title">YouTube</div>
+        <div class="link-sub">Detaild tutorials & Courses</div>
+      </div>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a href="www.linkedin.com/in/mehnaz-sheikh" class="link-card linkedin" target="_blank" rel="noopener">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="4" fill="#0a66c2"/>
+          <path d="M7.5 9.8h2.6V17H7.5V9.8zM8.8 6.2c.85 0 1.4.55 1.4 1.3s-.55 1.3-1.4 1.3c-.85 0-1.4-.55-1.4-1.3S7.95 6.2 8.8 6.2zM12.3 9.8h2.5v1c.4-.6 1.1-1.15 2.3-1.15 1.7 0 2.9 1.1 2.9 3.4V17h-2.6v-3.6c0-1-.4-1.7-1.3-1.7-.7 0-1.15.5-1.35 1-.07.17-.1.4-.1.65V17h-2.6c0-.03.03-6.5 0-7.2z" fill="white"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">LinkedIn</div>
+        <div class="link-sub">Professional profile</div>
+      </div>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a href="https://github.com/Mehnaz001" class="link-card github" target="_blank" rel="noopener">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.9 9.6.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.4-3.4-1.4-.5-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.3 6.9-5.1 6.9-9.6C22 6.6 17.5 2 12 2z" fill="#d7d7de"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">GitHub</div>
+        <div class="link-sub">Code & projects</div>
+      </div>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a href="https://www.whatsapp.com/channel/0029Vb7qffDAojYknwRlId2y" class="link-card whatsapp" target="_blank" rel="noopener">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2z" fill="#25d366"/>
+          <path d="M8.6 7.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .6.4.2.5.7 1.7.8 1.8.1.2.1.3 0 .5-.1.2-.2.3-.3.4-.1.1-.3.3-.4.4-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.4.2.5.3.1.2.1 1-.3 1.5s-1.6 1.1-2.6 1.1c-.9 0-2.9-.4-4.9-2.3-2.4-2.3-3.1-4.9-3.2-5.5-.1-.6-.7-1.6-.6-2.4.1-.8.5-1.2.7-1.3z" fill="white"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">WhatsApp Channel</div>
+        <div class="link-sub">Resources and updates</div>
+      </div>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a href="https://x.com/mehnaz62844" class="link-card x" target="_blank" rel="noopener">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.5 3h3l-6.6 7.6L21.5 21h-6.1l-4.8-6.3L5 21H2l7.1-8.1L2.5 3h6.3l4.3 5.7L17.5 3z" fill="white"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">X</div>
+        <div class="link-sub">Thoughts & updates</div>
+      </div>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+  </div>
+
+  <footer>Mehnazcodes - Thanks for your support</footer>
+
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.link-card');
+  cards.forEach((card, i) => {
+    card.style.animationDelay = (i * 0.08) + 's';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  cards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
